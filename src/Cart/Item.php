@@ -10,6 +10,11 @@ class Item
     private $product;
     private $quantity;
 
+    /**
+     * Item constructor.
+     * @param Product $product
+     * @param int $quantity
+     */
     public function __construct(Product $product, int $quantity)
     {
         if ($product->getMinimumQuantity() > $quantity) {

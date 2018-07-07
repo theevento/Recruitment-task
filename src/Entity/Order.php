@@ -1,6 +1,6 @@
 <?php
-namespace Recruitment\Entity;
 
+namespace Recruitment\Entity;
 
 class Order
 {
@@ -10,15 +10,15 @@ class Order
     private $totalPriceBrutto;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
      * @return Order
      */
     public function setId(int $id): self
@@ -28,15 +28,15 @@ class Order
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getItems()
+    public function getItems():array
     {
         return $this->items;
     }
 
     /**
-     * @param mixed $items
+     * @param array $items
      * @return Order
      */
     public function setItems(array $items): self
@@ -46,15 +46,15 @@ class Order
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getTotalPrice()
+    public function getTotalPrice():int
     {
         return $this->totalPrice;
     }
 
     /**
-     * @param mixed $totalPrice
+     * @param int $totalPrice
      * @return Order
      */
     public function setTotalPrice(int $totalPrice): self
@@ -69,8 +69,8 @@ class Order
     public function getDataForView():array
     {
         $itemArray = [];
-        foreach ($this->getItems() as $item)
-        {
+
+        foreach ($this->getItems() as $item) {
             $quantity = $item->getQuantity();
             $item = $item->getProduct();
             $price = $item->getPrice()*$quantity;
@@ -92,17 +92,17 @@ class Order
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getTotalPriceBrutto()
+    public function getTotalPriceBrutto():int
     {
         return $this->totalPriceBrutto;
     }
 
     /**
-     * @param mixed $totalPriceBrutto
+     * @param $totalPriceBrutto
      */
-    public function setTotalPriceBrutto($totalPriceBrutto): void
+    public function setTotalPriceBrutto(int $totalPriceBrutto): void
     {
         $this->totalPriceBrutto = $totalPriceBrutto;
     }

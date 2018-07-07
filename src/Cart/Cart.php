@@ -2,7 +2,6 @@
 
 namespace Recruitment\Cart;
 
-
 use Recruitment\Entity\Order;
 use Recruitment\Entity\Product;
 
@@ -34,15 +33,13 @@ class Cart
      */
     public function addProduct(Product $product, int $quantity = null):self
     {
-        if($quantity === null){
+        if ($quantity === null) {
             $quantity = $product->getMinimumQuantity();
         }
-        if($this->checkProductExist($product))
-        {
+        if ($this->checkProductExist($product)) {
             $existProduct = $this->items[$this->getProductIndex($product)];
             $existProduct->setQuantity($existProduct->getQuantity() + $quantity);
-        }
-        else {
+        } else {
             $item = new Item($product, $quantity);
             $this->items[] = $item;
         }
@@ -62,8 +59,7 @@ class Cart
     {
         $totalPrice = 0;
 
-        foreach($this->items as $item)
-        {
+        foreach ($this->items as $item) {
             $totalPrice += $item->getProduct()->getPrice() * $item->getQuantity();
         }
 
@@ -77,8 +73,7 @@ class Cart
     {
         $totalPriceBrutto = 0;
 
-        foreach($this->items as $item)
-        {
+        foreach ($this->items as $item) {
             $bruttoPrice = $this->getBruttoPriceSingleProduct($item->getProduct());
             $totalPriceBrutto += $bruttoPrice;
         }
@@ -94,7 +89,7 @@ class Cart
     {
         $item = $this->items[$this->getProductIndex($product)];
         $product = $item->getProduct();
-        return intval($product->getPrice() + $this->getTaxValueSingleProduct($product) )*$item->getQuantity();
+        return intval($product->getPrice() + $this->getTaxValueSingleProduct($product))*$item->getQuantity();
     }
 
     /**
@@ -114,12 +109,9 @@ class Cart
      */
     public function getItem(int $number):self
     {
-        if(isset($this->items[$number]))
-        {
+        if (isset($this->items[$number])) {
             $this->setProduct($this->items[$number]->getProduct());
-        }
-        else
-        {
+        } else {
             throw new \OutOfBoundsException();
         }
         return $this;
@@ -131,7 +123,7 @@ class Cart
      */
     public function removeProduct(Product $product):self
     {
-        if($this->checkProductExist($product)) {
+        if ($this->checkProductExist($product)) {
             unset($this->items[$this->getProductIndex($product)]);
             $this->items = array_values($this->items);
         }
@@ -145,9 +137,8 @@ class Cart
      */
     private function getProductIndex(Product $product):int
     {
-        for($x=0;$x<sizeof($this->items);$x++)
-        {
-            if($this->getItem($x)->getProduct()->getId() === $product->getId()) {
+        for ($x=0; $x<sizeof($this->items); $x++) {
+            if ($this->getItem($x)->getProduct()->getId() === $product->getId()) {
                 return $x;
             }
         }
@@ -159,10 +150,9 @@ class Cart
      */
     private function checkProductExist(Product $product) :bool
     {
-        if(!empty($this->items)){
-            for($x=0;$x<sizeof($this->items);$x++)
-            {
-                if($this->getItem($x)->getProduct()->getId() === $product->getId()) {
+        if (!empty($this->items)) {
+            for ($x=0; $x<sizeof($this->items); $x++) {
+                if ($this->getItem($x)->getProduct()->getId() === $product->getId()) {
                     return true;
                 } else {
                     return false;
@@ -171,7 +161,6 @@ class Cart
         } else {
             return false;
         }
-
     }
 
     /**
@@ -181,8 +170,7 @@ class Cart
      */
     public function setQuantity(Product $product, $quantity):self
     {
-        if($this->checkProductExist($product))
-        {
+        if ($this->checkProductExist($product)) {
             $this->items[$this->getProductIndex($product)]->setQuantity($quantity);
         }
         return $this;
@@ -211,5 +199,4 @@ class Cart
     {
         $this->items = [];
     }
-
 }
